@@ -48,6 +48,13 @@ generateBtn.addEventListener('click', () => {
             return;
         }
 
+        // Check if we have enough messages for the week
+        const totalPushesNeeded = 7 * pushesPerDay;
+        if (titles.length < totalPushesNeeded) {
+            alert(`Недостаточно сообщений! Нужно ${totalPushesNeeded} пар заголовок/тело (7 дней × ${pushesPerDay} пушей), а у вас ${titles.length}`);
+            return;
+        }
+
         // Helper function to escape CSV fields
         const escapeCSVField = (field) => {
             // If field contains semicolon, comma, quotes, or newline, wrap in quotes
@@ -60,24 +67,23 @@ generateBtn.addEventListener('click', () => {
 
         // Generate CSV content for all 7 days
         const csvLines = [];
+        let messageIndex = 0;
         
         // Iterate through all 7 days of the week
         for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
             const dayCode = DAY_CODES[dayIndex];
             
-            // For each day, create pushes at each time period
-            for (let timeIndex = 0; timeIndex < pushesPerDay; timeIndex++) {
-                const time = times[timeIndex];
+            // For each day, take the next N pushes from the list
+            for (let pushIndex = 0; pushIndex < pushesPerDay; pushIndex++) {
+                const time = times[pushIndex];
+                const title = escapeCSVField(titles[messageIndex]);
+                const body = escapeCSVField(bodies[messageIndex]);
                 
-                // For each time, create a push for each title/body pair
-                for (let msgIndex = 0; msgIndex < titles.length; msgIndex++) {
-                    const title = escapeCSVField(titles[msgIndex]);
-                    const body = escapeCSVField(bodies[msgIndex]);
-                    
-                    // Format: DAY;TIME;TITLE;BODY
-                    const line = `${dayCode};${time};${title};${body}`;
-                    csvLines.push(line);
-                }
+                // Format: DAY;TIME;TITLE;BODY
+                const line = `${dayCode};${time};${title};${body}`;
+                csvLines.push(line);
+                
+                messageIndex++;
             }
         }
 
