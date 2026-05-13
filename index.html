@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Push Notification Formatter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Push Notification Formatter</h1>
+        
+        <div class="form-section">
+            <div class="input-group">
+                <label for="pushesPerDay">Количество пушей в день:</label>
+                <input type="number" id="pushesPerDay" min="1" value="2" placeholder="Введите количество пушей в день">
+            </div>
+
+            <div class="input-group">
+                <label for="titles">Заголовки (построчно):</label>
+                <textarea id="titles" rows="5" placeholder="Введите заголовки, каждый с новой строки&#10;Пример:&#10;🎁 Bonus 500% vous attend!&#10;💰 Gagnez gros aujourd'hui!"></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="bodies">Тело сообщения (построчно):</label>
+                <textarea id="bodies" rows="5" placeholder="Введите тело сообщений, каждое с новой строки&#10;Пример:&#10;Inscrivez-vous en 30 sec!&#10;Jouez maintenant!"></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="times">Время для каждого пуша (построчно):</label>
+                <textarea id="times" rows="5" placeholder="Введите время для каждого пуша, каждое с новой строки&#10;Пример (для 2 пушей в день):&#10;12:00&#10;14:00"></textarea>
+            </div>
+
+            <div class="button-group">
+                <button id="generateBtn" class="btn-primary">Сформировать CSV</button>
+                <button id="downloadBtn" class="btn-secondary" style="display: none;">Скачать CSV</button>
+            </div>
+        </div>
+
+        <div class="preview-section" id="previewSection" style="display: none;">
+            <h2>Предварительный просмотр:</h2>
+            <div class="preview-content">
+                <pre id="previewText"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
