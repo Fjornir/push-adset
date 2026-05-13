@@ -48,6 +48,16 @@ generateBtn.addEventListener('click', () => {
             return;
         }
 
+        // Helper function to escape CSV fields
+        const escapeCSVField = (field) => {
+            // If field contains semicolon, comma, quotes, or newline, wrap in quotes
+            if (field.includes(';') || field.includes(',') || field.includes('"') || field.includes('\n')) {
+                // Escape existing quotes by doubling them
+                return `"${field.replace(/"/g, '""')}"`;
+            }
+            return field;
+        };
+
         // Generate CSV content for all 7 days
         const csvLines = [];
         
@@ -61,8 +71,8 @@ generateBtn.addEventListener('click', () => {
                 
                 // For each time, create a push for each title/body pair
                 for (let msgIndex = 0; msgIndex < titles.length; msgIndex++) {
-                    const title = titles[msgIndex];
-                    const body = bodies[msgIndex];
+                    const title = escapeCSVField(titles[msgIndex]);
+                    const body = escapeCSVField(bodies[msgIndex]);
                     
                     // Format: DAY;TIME;TITLE;BODY
                     const line = `${dayCode};${time};${title};${body}`;
